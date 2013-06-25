@@ -289,18 +289,25 @@ qb_ipc_us_recv_at_most(struct qb_ipc_one_way *one_way,
 
 	qb_sigpipe_ctl(QB_SIGPIPE_IGNORE);
 
+	qb_util_log(LOG_DEBUG, "VOSSEL - TIMEOUT %d", timeout);
 retry_peek:
 	result = recv(one_way->u.us.sock, data,
 		      sizeof(struct qb_ipc_request_header),
 		      MSG_NOSIGNAL | MSG_PEEK);
 
+	qb_util_log(LOG_DEBUG, "VOSSEL - RES1 %d errno %d", result, errno);
 	if (result == -1) {
 		if (errno == EAGAIN && (time_waited < timeout || timeout == -1)) {
 			result = qb_ipc_us_ready(one_way, NULL,
 						 time_to_wait, POLLIN);
 			time_waited += time_to_wait;
 			goto retry_peek;
+		} else if ( (errno == EAGAIN) && (time_waited >= timeout) && (timeout > 0)) {
+
+			qb_util_log(LOG_DEBUG, "VOSSEL - TIMEDOUT !");
+			return -ETIMEDOUT;
 		} else {
+			qb_util_log(LOG_DEBUG, "VOSSEL - res3 %d", errno);
 			return -errno;
 		}
 	}
@@ -312,6 +319,8 @@ retry_peek:
 
 	result = recv(one_way->u.us.sock, data, to_recv,
 		      MSG_NOSIGNAL | MSG_WAITALL);
+
+	qb_util_log(LOG_DEBUG, "VOSSEL - RES4 %d %d", result, errno);
 	if (result == -1) {
 		final_rc = -errno;
 		goto cleanup_sigpipe;
@@ -331,6 +340,8 @@ retry_peek:
 
 cleanup_sigpipe:
 	qb_sigpipe_ctl(QB_SIGPIPE_DEFAULT);
+
+	qb_util_log(LOG_DEBUG, "VOSSEL - RETURNING %d", final_rc);
 	return final_rc;
 }
 

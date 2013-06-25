@@ -266,6 +266,9 @@ qb_ipcc_recv(struct qb_ipcc_connection * c, void *msg_ptr,
 	}
 
 	res = c->funcs.recv(&c->response, msg_ptr, msg_len, ms_timeout);
+
+	qb_util_log(LOG_DEBUG, "VOSSEL - WHAT WE GOT? %d", res);
+
 	return _check_connection_state_with(c, res,
 					    _response_sock_one_way_get(c),
 					    ms_timeout, POLLIN);
