@@ -301,6 +301,7 @@ retry_peek:
 			result = qb_ipc_us_ready(one_way, NULL,
 						 time_to_wait, POLLIN);
 			time_waited += time_to_wait;
+			qb_util_log(LOG_DEBUG, "VOSSEL- RETRYING!!");
 			goto retry_peek;
 		} else if ( (errno == EAGAIN) && (time_waited >= timeout) && (timeout > 0)) {
 
