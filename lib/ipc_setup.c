@@ -124,6 +124,7 @@ qb_ipc_us_sock_error_is_disconnected(int err)
 {
 	if (err == -EAGAIN ||
 	    err == -ETIMEDOUT ||
+	    err == -ECONNRESET ||
 	    err == -EINTR ||
 #ifdef EWOULDBLOCK
 	    err == -EWOULDBLOCK ||
