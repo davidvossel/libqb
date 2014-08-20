@@ -1049,10 +1049,11 @@ test_ipc_stress_test(void)
 
 	iov[0].iov_len = giant_req.hdr.size;
 	iov[0].iov_base = &giant_req;
-printf("VOSSEL - gian msg size is %d %d\n", GIANT_MSG_DATA_SIZE, giant_req.hdr.size);
 	res = qb_ipcc_sendv_recv(conn, iov, 1,
 				 &res_header,
 				 sizeof(struct qb_ipc_response_header), -1);
+
+printf("VOSSEL - gian msg size is %d %d recv res %d\n", GIANT_MSG_DATA_SIZE, giant_req.hdr.size, res);
 	if (res != -ECONNRESET && res != -ENOTCONN) {
 		qb_log(LOG_ERR, "id:%d size:%d", res_header.id, res_header.size);
 		ck_assert_int_eq(res, -ENOTCONN);
