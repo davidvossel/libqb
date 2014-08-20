@@ -228,6 +228,7 @@ s1_msg_process_fn(qb_ipcs_connection_t *c,
 		printf("VOSSEL - got server fail req");
 		exit(0);
 	} else if (req_pt->id == IPC_MSG_REQ_SERVER_DISCONNECT) {
+		printf("VOSSEL - got server disconnect req");
 		qb_ipcs_disconnect(c);
 	}
 	return 0;
