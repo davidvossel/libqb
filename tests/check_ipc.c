@@ -1003,6 +1003,7 @@ test_ipc_stress_test(void)
 	int32_t client_buf_size = max_size - 1024;
 	int32_t real_buf_size;
 
+
 	enforce_server_buffer = 1;
 	pid = run_function_in_new_process(run_ipc_server);
 	enforce_server_buffer = 0;
@@ -1048,6 +1049,7 @@ test_ipc_stress_test(void)
 
 	iov[0].iov_len = giant_req.hdr.size;
 	iov[0].iov_base = &giant_req;
+printf("VOSSEL - gian msg size is %d %d\n", GIANT_MSG_DATA_SIZE, giant_req.hdr.size);
 	res = qb_ipcc_sendv_recv(conn, iov, 1,
 				 &res_header,
 				 sizeof(struct qb_ipc_response_header), -1);
