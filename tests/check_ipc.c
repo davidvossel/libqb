@@ -219,7 +219,7 @@ s1_msg_process_fn(qb_ipcs_connection_t *c,
 					ck_assert_int_eq(res, sent_len);
 				}
 			} else if (((m+1) % 1000) == 0) {
-				qb_log(LOG_DEBUG, "SENT: %d stress events sent", m+1);
+				qb_log(LOG_DEBUG, "SENT: %d stress events sent size... %d %d", m+1, GIANT_MSG_DATA_SIZE, sizeof(giant_event_send));
 			}
 			giant_event_send.hdr.id++;
 		}
