@@ -92,7 +92,7 @@ if HAVE_CHECK
 EXTRA_DIST += resources.test
 EXTRA_DIST += blackbox-segfault.sh
 
-TESTS = array.test map.test rb.test log.test blackbox-segfault.sh loop.test ipc.test resources.test
+TESTS = ipc.test
 
 resources.log: rb.log log.log ipc.log
 

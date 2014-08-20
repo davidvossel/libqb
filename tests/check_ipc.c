@@ -225,6 +225,7 @@ s1_msg_process_fn(qb_ipcs_connection_t *c,
 		}
 
 	} else if (req_pt->id == IPC_MSG_REQ_SERVER_FAIL) {
+		printf("VOSSEL - got server fail req");
 		exit(0);
 	} else if (req_pt->id == IPC_MSG_REQ_SERVER_DISCONNECT) {
 		qb_ipcs_disconnect(c);
@@ -1440,7 +1441,7 @@ make_soc_suite(void)
 {
 	Suite *s = suite_create("socket");
 	TCase *tc;
-
+/*
 	tc = tcase_create("ipc_txrx_us_timeout");
 	tcase_add_test(tc, test_ipc_txrx_us_timeout);
 	tcase_set_timeout(tc, 30);
@@ -1480,12 +1481,12 @@ make_soc_suite(void)
 	tcase_add_test(tc, test_ipc_disp_us);
 	tcase_set_timeout(tc, 16);
 	suite_add_tcase(s, tc);
-
+*/
 	tc = tcase_create("ipc_stress_test_us");
 	tcase_add_test(tc, test_ipc_stress_test_us);
 	tcase_set_timeout(tc, 60);
 	suite_add_tcase(s, tc);
-
+/*
 	tc = tcase_create("ipc_bulk_events_us");
 	tcase_add_test(tc, test_ipc_bulk_events_us);
 	tcase_set_timeout(tc, 16);
@@ -1505,7 +1506,7 @@ make_soc_suite(void)
 	tcase_add_test(tc, test_ipc_service_ref_count_us);
 	tcase_set_timeout(tc, 10);
 	suite_add_tcase(s, tc);
-
+*/
 	return s;
 }
 
@@ -1517,9 +1518,7 @@ main(void)
 	Suite *s;
 	int32_t do_shm_tests = QB_TRUE;
 
-#ifdef DISABLE_IPC_SHM
 	do_shm_tests = QB_FALSE;
-#endif /* DISABLE_IPC_SHM */
 
 	s = make_soc_suite();
 	sr = srunner_create(s);
