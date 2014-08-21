@@ -380,6 +380,7 @@ run_ipc_server(void)
 	fail_if(s1 == 0);
 
 	if (enforce_server_buffer) {
+		printf("VOSSEL enforcing max buffer %d\n", max_size);
 		qb_ipcs_enforce_buffer_size(s1, max_size);
 	}
 	qb_ipcs_poll_handlers_set(s1, &ph);
